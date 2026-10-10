@@ -4,7 +4,7 @@ const open = ref(false)
 const ready = ref(false)
 onMounted(() => { ready.value = true })
 const menuButton = ref<HTMLButtonElement | null>(null)
-const links = [{ href: '#materials', label: 'Каталог щебня' }, { href: '#delivery', label: 'Доставка' }, { href: '#about', label: 'О компании' }, { href: '#faq', label: 'Вопросы' }, { href: '#contacts', label: 'Контакты' }]
+const links = [{ href: '#materials', label: 'Материалы' }, { href: '#delivery', label: 'Доставка' }, { href: '#about', label: 'О компании' }, { href: '#faq', label: 'Вопросы' }, { href: '#contacts', label: 'Контакты' }]
 function closeMenu() { open.value = false; menuButton.value?.focus() }
 </script>
 
@@ -22,22 +22,22 @@ function closeMenu() { open.value = false; menuButton.value?.focus() }
 </template>
 
 <style scoped>
-.atlas-header { position: sticky; top: 0; z-index: 10; background: #f2efe8; border-bottom: 1px solid #d1d3c8; color: #242622; font-family: 'Golos Text', sans-serif; }
+.atlas-header { position: sticky; top: 0; z-index: 10; background: #f2efe8; border-bottom: 1px solid #d5cbbb; color: #242622; font-family: 'Golos Text', sans-serif; }
 .atlas-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: calc(100% - 32px); max-width: 1344px; margin-inline: auto; min-height: 66px; }
-.atlas-brand { font-size: 28px; font-weight: 750; letter-spacing: -1.4px; line-height: 1; }
-.atlas-brand span { display: block; color: #465b4a; font-size: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+.atlas-brand { text-transform: uppercase; font-size: 25px; font-weight: 750; letter-spacing: -1.4px; line-height: 1; }
+.atlas-brand span { display: block; color: #75471f; font-size: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
 .atlas-desktop-nav, .atlas-header-phone { display: none; }
-.atlas-menu-toggle { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #bfc4b8; background: transparent; color: #242622; }
+.atlas-menu-toggle { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #c9bda9; background: transparent; color: #242622; }
 .atlas-mobile-menu { padding: 5px 16px 15px; }
-.atlas-mobile-menu a { display: block; border-top: 1px solid #d1d3c8; padding: 15px 0; font-size: 16px; }
-a:focus-visible, button:focus-visible { outline: 2px solid #465b4a; outline-offset: 4px; }
+.atlas-mobile-menu a { display: block; border-top: 1px solid #d5cbbb; padding: 15px 0; font-size: 16px; }
+a:focus-visible, button:focus-visible { outline: 2px solid #75471f; outline-offset: 4px; }
 @media (min-width: 600px) {
   .atlas-header-inner { width: calc(100% - 48px); }
   .atlas-mobile-menu { padding-inline: 24px; }
 }
 @media (min-width: 1000px) {
   .atlas-header-inner { width: calc(100% - 96px); min-height: 88px; }
-  .atlas-brand { font-size: 33px; }
+  .atlas-brand { font-size: 30px; }
   .atlas-brand span { font-size: 9px; }
   .atlas-desktop-nav { display: flex; align-items: center; gap: 26px; font-size: 14px; }
   .atlas-desktop-nav a { padding-block: 15px; }

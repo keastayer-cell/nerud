@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { catalog, catalogCopy, company, materials } from '~/data/company'
+import { catalog, catalogCopy, company, materials, productCategories } from '~/data/company'
 const selectedKind = ref('granite')
 const selectedFractions = reactive<Record<string, string>>({ granite: '20–40' })
 const ready = ref(false)
@@ -27,8 +27,15 @@ const publicAsset = usePublicAsset()
 <template>
   <section id="materials" class="material-catalog page-section" aria-labelledby="catalog-title">
     <div class="page-wrap">
-      <div class="section-topline"><p>01 / Каталог</p><span>Виды и фракции</span></div>
+      <div class="section-topline"><p>01 / Каталог</p><span>Песок · Щебень · Грунт</span></div>
       <h2 id="catalog-title" class="catalog-title">{{ catalogCopy.heading }}</h2>
+      <div class="additional-materials" aria-label="Песок и грунт">
+        <article v-for="category in productCategories" :key="category.id" :id="category.id">
+          <h3>{{ category.title }}</h3><p>{{ category.description }}</p>
+          <a class="text-action" :href="company.phoneHref">{{ category.action }}</a>
+        </article>
+      </div>
+      <div class="stone-heading"><h3>Щебень</h3><p>Выберите вид и фракцию. Наличие уточняйте перед заказом.</p></div>
       <div class="material-nav" role="tablist" aria-label="Вид щебня">
         <button v-for="(kind, index) in catalog" :id="`tab-${kind.id}`" :key="kind.id" ref="kindButtons" role="tab" :aria-selected="selectedKind === kind.id" aria-controls="material-panel" :tabindex="selectedKind === kind.id ? 0 : -1" :disabled="!ready" @click="selectKind(kind.id)" @keydown="navigateKinds($event, index)"><span class="material-nav-number">0{{ index + 1 }}</span>{{ kind.label }}</button>
       </div>

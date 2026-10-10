@@ -17,16 +17,16 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
   await expect(page.locator('.atlas-hero img')).toHaveJSProperty('complete', true)
   await page.screenshot({ path: `../output/final-${testInfo.project.name}-hero.png` })
   const mobile = testInfo.project.name !== 'desktop'
-  const call = page.getByRole('link', { name: 'Позвонить и рассчитать доставку', exact: true })
-  await expect(call).toHaveAttribute('href', 'tel:+70000000000')
+  const call = page.getByRole('link', { name: 'Позвонить и узнать стоимость', exact: true })
+  await expect(call).toHaveAttribute('href', 'tel:2322333')
   if (mobile) {
     await call.scrollIntoViewIfNeeded()
     await expect(page.locator('.atlas-mobile-bar')).toBeHidden()
     await page.getByRole('button', { name: 'Меню', exact: true }).click()
     await expect(page.getByRole('button', { name: 'Меню', exact: true })).toHaveAttribute('aria-expanded', 'true')
-    await page.locator('#mobile-menu').getByRole('link', { name: 'Каталог щебня' }).click()
+    await page.locator('#mobile-menu').getByRole('link', { name: 'Материалы' }).click()
     await expect(page.locator('#mobile-menu')).toHaveCount(0)
-  } else await page.getByRole('link', { name: 'Выбрать щебень', exact: true }).click()
+  } else await page.getByRole('link', { name: 'Выбрать материал', exact: true }).click()
   const kinds = [
     { label: 'Гранитный', id: 'granite', fractions: ['05–20', '20–40', '40–70'] },
     { label: 'Гравийный', id: 'gravel', fractions: ['05–20'] },
@@ -75,7 +75,13 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
     await expect(page.locator(`#${id}`)).toBeInViewport()
     await overflow()
   }
-  await expect(page.locator('.route-link')).toHaveCount(0)
+  await expect(page.locator('.route-link')).toHaveAttribute('href', /^https:\/\/yandex\.ru\/maps\/\?text=/)
+  await expect(page.locator('#contacts')).toContainText('Производственная, 11')
+  await expect(page.locator('.additional-materials article')).toHaveCount(2)
+  await expect(page.locator('.equipment-strip')).toContainText('Фронтальные погрузчики')
+  await expect(page.locator('#about')).toContainText('Собственные автомобильные весы')
+  await expect(page.locator('body')).not.toContainText('ОПОРА')
+  await expect(page.locator('body')).not.toContainText('+7 (000)')
   await page.locator('#contacts [data-prominent-call]').scrollIntoViewIfNeeded()
   if (mobile) await expect(page.locator('.atlas-mobile-bar')).toBeHidden()
   await page.locator('details').first().locator('summary').click()
