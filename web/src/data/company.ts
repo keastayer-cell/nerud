@@ -36,16 +36,16 @@ export const catalog = [
 
 // Иллюстрации направлений не обозначают конкретную партию или машину компании.
 export const hero = {
-  title: ['Песок, щебень', 'и грунт', 'на ваш объект'],
+  title: 'Песок, щебень и грунт с доставкой на объект',
   description: ['Доставка и самовывоз', 'с площадки в Буревестнике.'],
   primaryAction: 'Позвонить и узнать цену',
   callHint: 'Материал · Объём · Адрес объекта',
   shortAddress: 'Буревестник · Производственная, 11',
 }
 export const directions = [
-  { id: 'sand', title: 'Песок', href: '#sand', image: '/images/direction-sand.webp', alt: 'Иллюстрация песка в образцовом лотке' },
-  { id: 'stone', title: 'Щебень', href: '#stone', image: '/images/direction-stone.webp', alt: 'Иллюстрация щебня в образцовом лотке' },
-  { id: 'soil', title: 'Грунт', href: '#soil', image: '/images/direction-soil.webp', alt: 'Иллюстрация грунта в образцовом лотке' },
+  { id: 'sand', title: 'Песок', href: '#sand', image: '/images/direction-sand-natural.webp', alt: 'Иллюстрация естественного образца песка' },
+  { id: 'stone', title: 'Щебень', href: '#stone', image: '/images/direction-stone-natural.webp', alt: 'Иллюстрация естественного образца щебня' },
+  { id: 'soil', title: 'Грунт', href: '#soil', image: '/images/direction-soil-natural.webp', alt: 'Иллюстрация естественного образца грунта' },
   { id: 'loader', title: 'Спецтехника', href: '#equipment', image: '/images/direction-loader.webp', alt: 'Иллюстрация фронтального погрузчика, не конкретной машины компании' },
 ]
 export const quickFacts = [

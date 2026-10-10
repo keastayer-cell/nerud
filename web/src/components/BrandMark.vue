@@ -7,4 +7,4 @@
     <g fill="#242622"><path d="m27 38 31-1 5-7h7v5h-5l-4 26H31l-4-10h-6l5-13Zm36 3h13l9 12v11H62l1-23Z"/><path d="M67 45h7l5 8H66l1-8Z" fill="#f7f4ed"/><path d="m31 42-3 9m10-9-3 10m10-10-3 10m10-10-3 10" stroke="#f7f4ed" stroke-width="3"/><circle cx="37" cy="64" r="8"/><circle cx="74" cy="64" r="8"/><circle cx="37" cy="64" r="3" fill="#f7f4ed"/><circle cx="74" cy="64" r="3" fill="#f7f4ed"/></g>
   </svg>
 </template>
-<style scoped>.brand-mark { width: 52px; height: 52px; flex-shrink: 0; } @media(min-width:1200px) { .brand-mark { width:82px; height:82px; } }</style>
+<style scoped>.brand-mark { width: 39px; height: 39px; flex-shrink: 0; } @media(min-width:1200px) { .brand-mark { width:62px; height:62px; } }</style>
