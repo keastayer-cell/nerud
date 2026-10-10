@@ -1,0 +1,16 @@
+<script setup lang="ts">
+import { about, company, contacts, delivery, questions } from '~/data/company'
+</script>
+
+<template>
+  <section id="delivery" class="delivery page-section" aria-labelledby="delivery-title">
+    <div class="page-wrap"><div class="section-topline"><p>02 / Доставка</p><span>До оформления заказа</span></div>
+      <div class="section-intro"><h2 id="delivery-title">{{ delivery.title }}</h2><p>{{ delivery.intro }}</p></div>
+      <div class="delivery-steps"><article v-for="(step, index) in delivery.steps" :key="step.title"><span class="step-number">0{{ index + 1 }}</span><h3>{{ step.title }}</h3><p>{{ step.text }}</p></article></div>
+      <div class="delivery-bottom"><div><p class="delivery-recap">{{ delivery.hint }}</p><p class="delivery-pickup">{{ delivery.selfPickup }}</p></div><a class="action action-ochre" data-prominent-call :href="company.phoneHref">{{ delivery.action }}</a></div>
+    </div>
+  </section>
+  <section id="about" class="about page-section" aria-labelledby="about-title"><div class="page-wrap"><div class="section-topline"><p>03 / Компания</p><span>{{ company.name }}</span></div><div class="about-layout"><div><h2 id="about-title">{{ about.title }}</h2><p class="about-description">{{ company.description }}</p></div><dl class="about-facts"><div v-for="fact in about.facts" :key="fact.label"><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div></dl></div></div></section>
+  <section id="faq" class="faq page-section" aria-labelledby="faq-title"><div class="page-wrap"><div class="section-topline"><p>04 / Вопросы</p><span>Коротко о заказе</span></div><div class="faq-layout"><h2 id="faq-title">Перед звонком</h2><div class="faq-list"><details v-for="item in questions" :key="item.question"><summary>{{ item.question }}<span aria-hidden="true">+</span></summary><p>{{ item.answer }}</p></details></div></div></div></section>
+  <section id="contacts" class="contacts page-section" aria-labelledby="contacts-title"><div class="page-wrap"><div class="section-topline"><p>05 / Контакты</p><span>{{ company.region }}</span></div><div class="contact-layout"><div><h2 id="contacts-title">{{ contacts.title }}</h2><p class="contact-hint">{{ contacts.hint }}</p><a class="contact-phone" :href="company.phoneHref">{{ company.phone }}</a><a class="action action-ochre" data-prominent-call :href="company.phoneHref">{{ contacts.action }}</a></div><dl class="contact-details"><div><dt>Когда звонить</dt><dd>{{ company.hours || 'Уточняется' }}</dd></div><div><dt>Адрес площадки</dt><dd>{{ company.address || 'Уточняется' }}</dd><dd v-if="company.mapHref"><a class="route-link" :href="company.mapHref" target="_blank" rel="noopener noreferrer">Построить маршрут</a></dd></div><div v-if="company.email"><dt>Электронная почта</dt><dd><a :href="`mailto:${company.email}`">{{ company.email }}</a></dd></div></dl></div><p v-if="company.demo" class="contact-demo-note">{{ contacts.demoNote }}</p></div></section>
+</template>
