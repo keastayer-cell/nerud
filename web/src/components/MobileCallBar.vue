@@ -22,7 +22,7 @@ onBeforeUnmount(() => observer?.disconnect())
 </template>
 
 <style scoped>
-.atlas-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 15; display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #f2efe8; border-top: 1px solid #c9bda9; color: #242622; font-family: 'Golos Text', sans-serif; }
+.atlas-mobile-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 15; display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--paper); border-top: 1px solid #c9bda9; color: #242622; font-family: 'Golos Text', sans-serif; }
 a { display: flex; justify-content: center; align-items: center; min-height: 48px; font-size: 16px; }
 a:last-child { background: #e2ad42; font-weight: 600; }
 a:focus-visible { outline: 2px solid #75471f; outline-offset: 3px; }

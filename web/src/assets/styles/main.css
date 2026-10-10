@@ -2,7 +2,7 @@
   font-family: 'Golos Text'; src: url('../fonts/GolosText.ttf') format('truetype');
   font-weight: 400 900; font-style: normal; font-display: swap;
 }
-:root { --paper: #f2efe8; --ink: #242622; --mineral: #75471f; --ochre: #e2ad42; --muted: #6b6258; --line: #c9bda9; }
+:root { --paper: #f7f4ed; --ink: #1d1e1b; --mineral: #955316; --ochre: #e2ad42; --muted: #6b6258; --line: #c9bda9; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 82px; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Golos Text', sans-serif; font-size: 16px; -webkit-font-smoothing: antialiased; }
@@ -188,3 +188,7 @@ details>p { color: #5e574e; font-size: 16px; padding: 0 30px 20px 0; }
   .stone-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 30px; }
   .equipment-strip { grid-template-columns: 1fr 1fr; gap: 90px; }
 }
+
+/* Anchor targets clear the compact sticky masthead. */
+#sand, #soil, #stone, #equipment { scroll-margin-top: 16px; }
+@media(min-width:1200px) { html { scroll-padding-top: 142px; } }

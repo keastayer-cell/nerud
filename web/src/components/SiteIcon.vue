@@ -7,6 +7,10 @@ const paths: Record<string, string> = {
   check: 'm5 12 4 4L19 6',
   menu: 'M4 6h16 M4 12h16 M4 18h16',
   close: 'm6 6 12 12 M6 18 18 6',
+  arrow: 'M3 12h18 M14 5l7 7-7 7',
+  yard: 'M3 21V8l9-6 9 6v13H3Z M7 21V11h10v10 M7 15h10 M7 18h10',
+  scale: 'M3 21h18 M5 21v-4h14v4 M12 17V7 M5 7h14 M9 3h6v4H9z M7 7l-3 7h6L7 7Z M17 7l-3 7h6l-3-7Z',
+  card: 'M2 6h20v14H2z M2 10h20 M6 16h5',
   layers: 'm12 3 10 5-10 5L2 8l10-5 M2 12l10 5 10-5 M2 16l10 5 10-5',
 }
 </script>

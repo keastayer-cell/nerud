@@ -1,84 +1,93 @@
 <script setup lang="ts">
-import { hero as atlas, company } from '~/data/company'
+import { hero, company, directions, quickFacts } from '~/data/company'
 const publicAsset = usePublicAsset()
 </script>
 
 <template>
   <section class="atlas-hero" aria-labelledby="atlas-title">
-    <div class="atlas-wrap atlas-hero-layout">
-      <div class="atlas-hero-copy">
-        <p class="atlas-region">{{ company.region }}</p>
-        <h1 id="atlas-title"><span v-for="line in atlas.title" :key="line">{{ line }}</span></h1>
-        <p class="atlas-description">{{ atlas.description }}</p>
-        <a class="atlas-phone" :href="company.phoneHref">{{ company.phone }}</a>
-        <a class="atlas-primary" data-prominent-call :href="company.phoneHref">{{ atlas.primaryAction }}</a>
-        <p class="atlas-call-hint">{{ atlas.callHint }}</p>
-        <a class="atlas-secondary" href="#materials">{{ atlas.secondaryAction }}</a>
+    <div class="hero-wrap">
+      <div class="hero-intro">
+        <div class="hero-heading"><p class="atlas-region">{{ company.region }}</p><h1 id="atlas-title"><span v-for="(line, index) in hero.title" :key="line">{{ line }}<b v-if="index === hero.title.length - 1" aria-hidden="true">.</b></span></h1></div>
+        <div class="hero-order"><p class="hero-description"><span v-for="line in hero.description" :key="line">{{ line }} </span></p><a class="atlas-phone" :href="company.phoneHref">{{ company.phone }}</a><a class="hero-call" data-prominent-call :href="company.phoneHref">{{ hero.primaryAction }}<SiteIcon name="arrow" /></a><p class="hero-hint">{{ hero.callHint }}</p></div>
       </div>
-      <figure class="atlas-hero-sample">
-        <div class="atlas-hero-image">
-          <img :src="publicAsset(atlas.visual.src)" :alt="atlas.visual.alt" width="800" height="800" fetchpriority="high">
-          <div class="atlas-sample-caption">
-            <p>{{ atlas.visual.material }}</p>
-            <span class="atlas-sample-fraction">{{ atlas.visual.fraction }}<small>мм</small></span>
-          </div>
-        </div>
-        <figcaption><span>{{ atlas.visual.marking }}</span><span>{{ atlas.visual.note }}</span></figcaption>
-      </figure>
+      <nav class="hero-directions" aria-label="Материалы и спецтехника">
+        <a v-for="(direction, index) in directions" :key="direction.id" :href="direction.href" class="direction" :aria-label="direction.title">
+          <span class="direction-number">0{{ index + 1 }}</span>
+          <div class="direction-image"><img :src="publicAsset(direction.image)" :alt="direction.alt" width="640" height="640" decoding="async"></div>
+          <span class="direction-title">{{ direction.title }}</span><SiteIcon name="arrow" />
+        </a>
+      </nav>
     </div>
+    <div class="hero-facts"><div class="hero-wrap fact-list"><div v-for="fact in quickFacts" :key="fact.text" class="quick-fact"><SiteIcon :name="fact.icon" /><span>{{ fact.text }}</span></div><a class="quick-fact fact-address" :href="company.mapHref" target="_blank" rel="noopener noreferrer"><SiteIcon name="pin" /><span>{{ hero.shortAddress }}</span></a></div></div>
   </section>
 </template>
 
 <style scoped>
-.atlas-hero { background: #f2efe8; color: #242622; font-family: 'Golos Text', sans-serif; }
-.atlas-wrap { width: calc(100% - 32px); max-width: 1344px; margin-inline: auto; }
-.atlas-hero-layout { display: grid; padding-top: 24px; padding-bottom: 32px; gap: 26px; }
-.atlas-region { color: #75471f; font-size: 14px; line-height: 1.4; margin-bottom: 16px; }
-h1 { font-size: clamp(40px, 10.8vw, 44px); font-weight: 750; line-height: 1.02; letter-spacing: -1.9px; }
+.atlas-hero { background: var(--paper); }
+.hero-wrap { width: calc(100% - 32px); max-width: 1408px; margin-inline: auto; }
+.hero-intro { display: grid; gap: 22px; padding-top: 23px; }
+.atlas-region { color: var(--mineral); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px; }
+h1 { font-size: clamp(40px, 10.7vw, 47px); font-weight: 850; line-height: .99; letter-spacing: -1.9px; }
 h1 span { display: block; }
-.atlas-description { margin-top: 18px; max-width: 350px; font-size: 16px; line-height: 1.5; color: #5e574e; }
-.atlas-phone { display: inline-block; font-size: 20px; letter-spacing: -.5px; font-weight: 600; line-height: 1.4; margin-top: 18px; }
-.atlas-primary { display: flex; justify-content: center; align-items: center; min-height: 58px; padding: 14px 16px; margin-top: 14px; background: #e2ad42; color: #242622; font-size: 16px; font-weight: 600; line-height: 1.35; text-align: center; }
-.atlas-primary:hover { background: #d49a2c; }
-.atlas-call-hint { margin-top: 10px; font-size: 13px; color: #6b6258; line-height: 1.45; max-width: 330px; }
-.atlas-secondary { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: #75471f; margin-top: 7px; }
-.atlas-secondary:hover, .atlas-phone:hover { color: #75471f; }
-.atlas-hero-sample { margin: 0; }
-.atlas-hero-image { position: relative; height: 266px; background: #75471f; overflow: hidden; }
-.atlas-hero-image img { height: 100%; width: 100%; object-fit: cover; }
-.atlas-hero-image::after { content: ''; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgb(20 26 20 / 75%)); pointer-events: none; }
-.atlas-sample-caption { position: absolute; left: 20px; bottom: 19px; right: 20px; z-index: 1; color: #f2efe8; }
-.atlas-sample-caption p { font-size: 16px; line-height: 1.3; }
-.atlas-sample-fraction { display: flex; align-items: baseline; gap: 10px; font-size: 66px; letter-spacing: -3px; font-weight: 600; line-height: 1.1; margin-top: 8px; font-variant-numeric: tabular-nums; }
-.atlas-sample-fraction small { font-size: 15px; font-weight: 400; letter-spacing: 0; }
-figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 15px; margin-top: 10px; font-size: 11px; line-height: 1.5; color: #6b6258; }
-figcaption span:first-child { text-transform: uppercase; letter-spacing: .8px; }
-a:focus-visible { outline: 2px solid #75471f; outline-offset: 4px; }
-@media (min-width: 600px) {
-  .atlas-wrap { width: calc(100% - 48px); }
-  .atlas-hero-copy { max-width: 560px; }
-  h1 { font-size: 60px; }
-  .atlas-description { max-width: 460px; font-size: 18px; }
-  .atlas-primary { max-width: 400px; }
-  .atlas-hero-image { height: 420px; }
+h1 b { color: var(--mineral); }
+.hero-description { font-size: 18px; line-height: 1.4; max-width: 440px; }
+.atlas-phone { display: inline-flex; align-items: center; min-height: 40px; margin-top: 10px; font-size: 22px; font-weight: 650; letter-spacing: -.5px; }
+.hero-call { display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 58px; margin-top: 8px; padding: 14px 18px; background: #a96518; color: #fffaf2; font-weight: 650; font-size: 16px; line-height: 1.35; }
+.hero-call:hover { background: #8b5012; }
+.hero-call .icon { width: 27px; height: 27px; flex-shrink: 0; }
+.hero-hint { font-size: 12px; color: var(--muted); margin-top: 12px; }
+.hero-directions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 28px; margin-bottom: 25px; }
+.direction { display: flex; flex-direction: column; min-width: 0; padding: 14px 12px 15px; border-top: 1px solid var(--line); }
+.direction:nth-child(odd) { border-right: 1px solid var(--line); padding-left: 0; }
+.direction:nth-child(even) { padding-right: 0; }
+.direction-number { color: #754017; font-size: 12px; font-weight: 600; }
+.direction-image { position: relative; height: clamp(124px, 36vw, 165px); margin-inline: -7px; }
+.direction-image img { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.direction-title { font-size: clamp(19px, 5.4vw, 24px); line-height: 1.1; letter-spacing: -.7px; font-weight: 750; margin-top: 4px; }
+.direction>.icon { margin-top: 10px; width: 28px; height: 24px; color: var(--mineral); transition: transform .18s; }
+.direction:hover>.icon { transform: translateX(7px); }
+.hero-facts { border-block: 1px solid var(--line); padding-block: 20px; }
+.fact-list { display: grid; gap: 16px; }
+.quick-fact { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 1.35; }
+.quick-fact .icon { width: 27px; height: 27px; flex-shrink: 0; color: #754017; }
+.fact-address:hover { color: var(--mineral); }
+@media(min-width:600px) {
+  .hero-wrap { width: calc(100% - 48px); }
+  h1 { font-size: 74px; letter-spacing: -3.7px; }
+  .hero-order { max-width: 560px; }
+  .hero-description { font-size: 23px; }
+  .hero-call { font-size: 20px; min-height: 68px; }
+  .hero-hint { font-size: 15px; }
+  .direction-image { height: 260px; }
+  .direction-title { font-size: 30px; }
+  .fact-list { grid-template-columns: 1fr 1fr; }
 }
-@media (min-width: 1000px) {
-  .atlas-wrap { width: calc(100% - 96px); }
-  .atlas-hero-layout { grid-template-columns: minmax(0, .4fr) minmax(0, .6fr); gap: 40px; padding-top: 38px; padding-bottom: 48px; align-items: stretch; }
-  .atlas-hero-copy { padding-top: 15px; padding-bottom: 10px; }
-  .atlas-region { margin-bottom: 25px; font-size: 15px; }
-  h1 { font-size: clamp(49px, 4.7vw, 70px); letter-spacing: -3px; line-height: 1.02; }
-  .atlas-description { margin-top: 24px; font-size: 18px; max-width: 390px; }
-  .atlas-phone { margin-top: 25px; font-size: 23px; }
-  .atlas-primary { margin-top: 18px; max-width: 100%; min-height: 62px; font-size: 16px; }
-  .atlas-call-hint { font-size: 14px; margin-top: 12px; max-width: 370px; }
-  .atlas-secondary { margin-top: 12px; }
-  .atlas-hero-sample { display: flex; flex-direction: column; }
-  .atlas-hero-image { height: clamp(550px, 42vw, 620px); flex: initial; min-height: 0; }
-  .atlas-sample-caption { left: 32px; right: 32px; bottom: 28px; }
-  .atlas-sample-caption p { font-size: 21px; }
-  .atlas-sample-fraction { font-size: clamp(95px, 9vw, 138px); letter-spacing: -6px; margin-top: 10px; }
-  .atlas-sample-fraction small { font-size: 20px; }
-  figcaption { font-size: 11px; margin-top: 12px; }
+@media(min-width:1000px) {
+  .hero-wrap { width: calc(100% - 112px); }
+  .hero-intro { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 60px; padding-top: 24px; align-items: center; }
+  .atlas-region { font-size: 15px; letter-spacing: 2.2px; margin-bottom: 14px; }
+  h1 { font-size: clamp(68px, 7.1vw, 106px); line-height: .94; letter-spacing: -4.5px; }
+  .hero-order { padding-top: 32px; }
+  .hero-description { font-size: clamp(23px, 2.2vw, 34px); line-height: 1.2; max-width: none; }
+  .hero-description span { display: block; }
+
+  .hero-call { font-size: clamp(18px, 1.7vw, 26px); margin-top: 30px; min-height: 82px; padding-inline: 25px; }
+  .hero-call .icon { width: 33px; height: 33px; }
+  .hero-hint { font-size: 17px; margin-top: 21px; }
+  .hero-directions { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 43px; margin-bottom: 32px; }
+  .direction { padding: 13px 25px 12px; border-top: 0; border-right: 1px solid var(--line); }
+  .direction:nth-child(odd) { padding-left: 25px; }
+  .direction:first-child { padding-left: 0; }
+  .direction:last-child { padding-right: 0; border-right: 0; }
+  .direction-number { font-size: 16px; }
+  .direction-image { height: clamp(210px, 16vw, 255px); margin-inline: -25px; }
+  .direction-title { font-size: clamp(25px, 2.3vw, 35px); letter-spacing: -1px; margin-top: 2px; }
+  .direction>.icon { width: 32px; height: 28px; margin-top: 15px; }
+  .hero-facts { padding-block: 24px; }
+  .fact-list { display: flex; justify-content: space-between; gap: 24px; }
+  .quick-fact { font-size: 14px; gap: 14px; }
+  .quick-fact+.quick-fact { border-left: 1px solid var(--line); padding-left: 24px; }
+  .quick-fact .icon { width: 30px; height: 30px; }
 }
+@media(min-width:1200px) { .atlas-phone { display: none; } }
 </style>

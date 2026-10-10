@@ -35,7 +35,7 @@ const publicAsset = usePublicAsset()
           <a class="text-action" :href="company.phoneHref">{{ category.action }}</a>
         </article>
       </div>
-      <div class="stone-heading"><h3>Щебень</h3><p>Выберите вид и фракцию. Наличие уточняйте перед заказом.</p></div>
+      <div id="stone" class="stone-heading"><h3>Щебень</h3><p>Выберите вид и фракцию. Наличие уточняйте перед заказом.</p></div>
       <div class="material-nav" role="tablist" aria-label="Вид щебня">
         <button v-for="(kind, index) in catalog" :id="`tab-${kind.id}`" :key="kind.id" ref="kindButtons" role="tab" :aria-selected="selectedKind === kind.id" aria-controls="material-panel" :tabindex="selectedKind === kind.id ? 0 : -1" :disabled="!ready" @click="selectKind(kind.id)" @keydown="navigateKinds($event, index)"><span class="material-nav-number">0{{ index + 1 }}</span>{{ kind.label }}</button>
       </div>

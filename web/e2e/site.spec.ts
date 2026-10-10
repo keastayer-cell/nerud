@@ -11,13 +11,26 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
   await page.evaluate(() => document.fonts.ready)
   const overflow = async () => expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy()
   await overflow()
-  await expect(page.locator('.atlas-hero img')).toHaveCount(1)
-  await expect(page.locator('.atlas-hero figcaption')).toContainText('Гранит · фракция 20–40 мм')
+  await expect(page.locator('.hero-directions .direction')).toHaveCount(4)
+  for (const image of await page.locator('.hero-directions img').all()) {
+    await expect(image).toHaveJSProperty('complete', true)
+    expect(await image.evaluate(img => (img as HTMLImageElement).naturalWidth > 0)).toBeTruthy()
+  }
+  for (const direction of await page.locator('.hero-directions .direction').all()) {
+    const image = await direction.locator('img').boundingBox()
+    const title = await direction.locator('.direction-title').boundingBox()
+    expect(image!.y + image!.height).toBeLessThanOrEqual(title!.y + 1)
+  }
   await expect(page.locator('body')).not.toContainText('Атлас материала')
-  await expect(page.locator('.atlas-hero img')).toHaveJSProperty('complete', true)
+  for (const [name, id] of [['Песок', 'sand'], ['Щебень', 'stone'], ['Грунт', 'soil'], ['Спецтехника', 'equipment']]) {
+    await page.locator('.hero-directions').getByRole('link', {name, exact: true}).click()
+    await expect(page).toHaveURL(new RegExp(`#${id}$`))
+    await expect(page.locator(`#${id}`)).toBeInViewport()
+  }
+  await page.evaluate(() => window.scrollTo(0, 0))
   await page.screenshot({ path: `../output/final-${testInfo.project.name}-hero.png` })
   const mobile = testInfo.project.name !== 'desktop'
-  const call = page.getByRole('link', { name: 'Позвонить и узнать стоимость', exact: true })
+  const call = page.getByRole('link', { name: 'Позвонить и узнать цену', exact: true })
   await expect(call).toHaveAttribute('href', 'tel:+78312322333')
   if (mobile) {
     await call.scrollIntoViewIfNeeded()
@@ -26,7 +39,7 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
     await expect(page.getByRole('button', { name: 'Меню', exact: true })).toHaveAttribute('aria-expanded', 'true')
     await page.locator('#mobile-menu').getByRole('link', { name: 'Материалы' }).click()
     await expect(page.locator('#mobile-menu')).toHaveCount(0)
-  } else await page.getByRole('link', { name: 'Выбрать материал', exact: true }).click()
+  } else await page.locator('.hero-directions').getByRole('link', { name: 'Щебень', exact: true }).click()
   const kinds = [
     { label: 'Гранитный', id: 'granite', fractions: ['05–20', '20–40', '40–70'] },
     { label: 'Гравийный', id: 'gravel', fractions: ['05–20'] },
@@ -67,7 +80,7 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
   await expect(page.getByRole('tab', { name: /Гравийный/ })).toHaveAttribute('aria-selected', 'true')
   await page.keyboard.press('Home')
   await expect(graniteTab).toHaveAttribute('aria-selected', 'true')
-  for (const [label, id] of [['Доставка', 'delivery'], ['О компании', 'about'], ['Вопросы', 'faq'], ['Контакты', 'contacts']]) {
+  for (const [label, id] of [['Материалы', 'materials'], ['Спецтехника', 'equipment'], ['Доставка', 'delivery'], ['Контакты', 'contacts']]) {
     if (mobile) await page.getByRole('button', { name: 'Меню', exact: true }).click()
     const nav = page.locator(mobile ? '#mobile-menu' : '.atlas-desktop-nav')
     await nav.getByRole('link', { name: label, exact: true }).click()
