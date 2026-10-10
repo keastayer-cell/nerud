@@ -18,7 +18,7 @@ test('complete site: materials, fractions, navigation and mobile call flow', asy
   await page.screenshot({ path: `../output/final-${testInfo.project.name}-hero.png` })
   const mobile = testInfo.project.name !== 'desktop'
   const call = page.getByRole('link', { name: 'Позвонить и узнать стоимость', exact: true })
-  await expect(call).toHaveAttribute('href', 'tel:2322333')
+  await expect(call).toHaveAttribute('href', 'tel:+78312322333')
   if (mobile) {
     await call.scrollIntoViewIfNeeded()
     await expect(page.locator('.atlas-mobile-bar')).toBeHidden()
